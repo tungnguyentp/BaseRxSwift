@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         APIClient.getLocation(page: 1, paginate: 5, key: "").asObservable().subscribe(onNext: { (citis) in
-            print(citis)
+            print(citis.datas)
             }).disposed(by: disposeBag)
     }
 

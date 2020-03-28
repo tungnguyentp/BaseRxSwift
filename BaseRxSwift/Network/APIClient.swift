@@ -19,13 +19,6 @@ import Alamofire
 //    var message:String
 //}
 
-class ReponseData<T: Codable>: Codable {
-    var count: Int?
-    var start: Int?
-    var total: Int?
-    var subjects: T?
-}
-
 private let TimeoutClosure = {(endpoint: Endpoint, closure: MoyaProvider<BeberiaService>.RequestResultClosure) -> Void in
     
     if var urlRequest = try? endpoint.urlRequest() {
@@ -56,19 +49,15 @@ class APIClient {
                         do {
                             let decoder = JSONDecoder()
                             
-                             print(String(data: response.data, encoding: .utf8)!)
-                          //  var citiss = [CityName]()
-                            let data: T = try decoder.decode(BasicResponse<T>.self , from: response.data) as! T
-//                            if let data1: CityNameRespone = data.data{
-//                                if let citis = data1.datas{
-//                                    citiss = citis
-//                                }
-//                            }
+                            print(String(data: response.data, encoding: .utf8)!)
+
+                            let data = try decoder.decode(BaseRespone.self , from: response.data)
+                            let respone: T = data.data as! T
 //
-                            print(data)
+                            print(respone)
                             
                       //      let result = (subjects == nil) ? responseResult.empty : responseResult.succeed(data: subjects!)
-                            observable.onNext(data)
+                            observable.onNext(respone)
                         }catch let error {
 //                            self?.requestError(message: error.localizedDescription)
 //                            observable.onNext(responseResult.failed(message: error.localizedDescription))
